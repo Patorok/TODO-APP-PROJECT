@@ -1,0 +1,50 @@
+.header{
+    border-bottom: 1px solid #5E1B89;
+}
+
+.title{
+    font-size: 2em;
+    color: #5E1B89;
+    font-family: 'DM Sans', sans-serif;
+}
+
+img {
+    width: 9.6875em;
+    height: 100%;
+}
+
+.task-list{
+    border-right: 1px solid transparent;
+    border-image: linear-gradient(to bottom, #F4512C, #5E1B89);
+    border-image-slice: 1;
+
+    .list-icon{
+        width: 80px;
+    }
+    
+    .list-title{
+        font-weight: 600;
+        color: #F4512C;
+        font-family: 'Roboto Slab', serif;
+    }
+
+    .task-list-content{
+        max-height: 650px;
+    }
+}
+
+@media screen and (max-width: 768px){
+
+    .task-list{
+        border-right: none;
+
+        .list-icon{
+            margin-right: 20px;
+        }
+    
+    
+        .utils{
+            margin-top: 20px!important;
+        }
+    }
+}

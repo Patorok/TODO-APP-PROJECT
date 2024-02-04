@@ -1,0 +1,33 @@
+button{
+    color: #F4512C!important;
+    font-weight: 600!important;
+    
+    img{
+        width: 23px;
+        height: 23px;
+    }
+}
+.done:hover{
+    box-shadow: 5px 5px 15px rgba(253, 109, 13, 0.418);
+    transition: ease-in-out .3s;
+}
+.create:hover{
+    box-shadow: 5px 5px 15px rgba(145, 13, 253, 0.418);
+    transition: ease-in-out .3s;
+}
+.clean:hover{
+    box-shadow: 5px 5px 15px rgba(255, 0, 0, 0.418);
+    transition: ease-in-out .3s;
+}
+.edit:hover{
+    box-shadow: 5px 5px 10px rgba(145, 13, 253, 0.418);
+    transition: ease-in-out .3s;
+}
+.delete:hover{
+    box-shadow: 5px 5px 10px rgba(255, 0, 0, 0.418);
+    transition: ease-in-out .3s;
+}
+.undo:hover{
+    box-shadow: 5px 5px 10px rgba(99, 99, 99, 0.418);
+    transition: ease-in-out .3s;
+}
