@@ -1,20 +1,17 @@
 import './TodoList.css';
-import Button from '../../components/button/Button';
-import Card from '../../components/card/Card';
-import Logo from '../../assets/lexmeet-logo.png';
-import ListIcon from '../../assets/new-icon.svg';
-import DoneIcon from '../../assets/todo-new-icon.svg';
-import CreateIcon from '../../assets/add-icon.svg';
-import CleanIcon from '../../assets/delete-icon.svg';
-import DoneAllIcon from '../../assets/done-icon.svg';
-import EditIcon from '../../assets/edit-icon.svg';
-import RemoveIcon from '../../assets/remove-icon.svg';
-import ClearIcon from '../../assets/clear-icon.svg';
-import UndoIcon from '../../assets/undo-icon.svg';
+// import { useState } from 'react';
+import { Assets } from '../../assets/assets';
+import { Components } from '../../components/components';
 
 const TodoList = () => {
 
     const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing';
+
+    // const [selectTask, setSelectTask] = useState<Task | null>(null);
+
+    // const handleSampleClick = (task: any) => {
+    //     setSelectTask(task);
+    // };
 
     const checkbox = (
         <div className="form-check m-0">
@@ -28,9 +25,10 @@ const TodoList = () => {
     );
       
     return (
-        <>
+        <>  
+            <Components.Modal></Components.Modal>
             <div className='header d-md-flex justify-content-between align-items-center m-4 p-3 pt-0 pb-2'>
-                <img src={Logo} alt="Loading..." />
+                <img src={Assets.Logo} alt="Loading..." />
                 <div className='title fw-bold'>
                     To-do List!
                 </div>
@@ -39,7 +37,7 @@ const TodoList = () => {
                 <div className="task-list col-lg-6">
                     <div className="row align-items-center">
                         <div className='col-lg-6 d-flex align-items-center justify-content-lg-between'>
-                            <img className='list-icon' src={ListIcon} alt="Loading..." />
+                            <img className='list-icon' src={Assets.ListIcon} alt="Loading..." />
                             <div className='list-title fw-bold fs-1'>
                                 Task List!
                             </div>
@@ -47,48 +45,30 @@ const TodoList = () => {
 
                         <div className="utils col-lg-6">
                             <div className="d-flex justify-content-end align-items-center">
-                                <Button btnclass='done' onClick={() => {alert('clicked')}}>
-                                    <img src={DoneAllIcon} alt="loading..." />
+                                <Components.Button dataBsToggle="modal" targetModal="#doneDialog" btnclass='done' >
+                                    <img src={Assets.DoneAllIcon} alt="loading..." />
                                     <span className='ps-2'>Done all</span>
-                                </Button>
-                                <Button btnclass='create' onClick={() => {alert('clicked')}}>
-                                    <img src={CreateIcon} alt="loading..." />
-                                </Button>
-                                <Button btnclass='clean' onClick={() => {alert('clicked')}}>
-                                    <img src={CleanIcon} alt="loading..." />
-                                </Button>
+                                </Components.Button>
+                                <Components.Button btnclass='create'>
+                                    <img src={Assets.CreateIcon} alt="loading..." />
+                                </Components.Button>
+                                <Components.Button dataBsToggle="modal" targetModal="#deleteDialog" btnclass='clean'>
+                                    <img src={Assets.CleanIcon} alt="loading..." />
+                                </Components.Button>
                             </div>
                         </div>
                     </div>
 
                     {/* Task list part */}
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
-                        <Card checkbox={checkbox} taskTitle='Sample Title' taskDesc={lorem}>
-                            <Button btnclass='edit' onClick={() => {alert('clicked')}}>
-                                <img src={EditIcon} alt="loading..." />
-                            </Button>
-                            <Button btnclass='delete' onClick={() => {alert('clicked')}}>
-                                <img src={RemoveIcon} alt="loading..." />
-                            </Button>
-                        </Card>
-
-                        <Card checkbox={checkbox} taskTitle='Sample Title' taskDesc={lorem}>
-                            <Button btnclass='edit' onClick={() => {alert('clicked')}}>
-                                <img src={EditIcon} alt="loading..." />
-                            </Button>
-                            <Button btnclass='delete' onClick={() => {alert('clicked')}}>
-                                <img src={RemoveIcon} alt="loading..." />
-                            </Button>
-                        </Card>
-
-                        <Card checkbox={checkbox} taskTitle='Sample Title' taskDesc={lorem}>
-                            <Button btnclass='edit' onClick={() => {alert('clicked')}}>
-                                <img src={EditIcon} alt="loading..." />
-                            </Button>
-                            <Button btnclass='delete' onClick={() => {alert('clicked')}}>
-                                <img src={RemoveIcon} alt="loading..." />
-                            </Button>
-                        </Card>
+                        <Components.Card checkbox={checkbox} taskTitle='Sample Title' taskDesc={lorem}>
+                            <Components.Button btnclass='edit' onClick={() => {alert('clicked')}}>
+                                <img src={Assets.EditIcon} alt="loading..." />
+                            </Components.Button>
+                            <Components.Button btnclass='delete' onClick={() => {alert('clicked')}}>
+                                <img src={Assets.RemoveIcon} alt="loading..." />
+                            </Components.Button>
+                        </Components.Card>
                     </div>
                 </div>
 
@@ -96,7 +76,7 @@ const TodoList = () => {
                 <div className="task-list col-lg-6 border-0">
                     <div className="row align-items-center ps-3">
                         <div className='col-lg-8 d-flex align-items-center'>
-                            <img className='list-icon me-4' src={DoneIcon} alt="Loading..." />
+                            <img className='list-icon me-4' src={Assets.DoneIcon} alt="Loading..." />
                             <div className='list-title fw-bold fs-1'>
                                 Done Task!
                             </div>
@@ -104,25 +84,20 @@ const TodoList = () => {
 
                         <div className="utils col-lg-4">
                             <div className="d-flex justify-content-end align-items-center">
-                                <Button btnclass='delete' onClick={() => { alert('clicked') }}>
-                                    <img src={ClearIcon} alt="loading..." />
+                                <Components.Button dataBsToggle="modal" targetModal="#clearDonesDialog" btnclass='delete'>
+                                    <img src={Assets.ClearIcon} alt="loading..." />
                                     <span className='ps-2'>Clear</span>
-                                </Button>
+                                </Components.Button>
                             </div>
                         </div>
                     </div>
 
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
-                        <Card isDone='done' lineThrough='strikethrough' taskTitle='Sample Title' taskDesc={lorem}>
-                            <Button btnclass='undo' onClick={() => {alert('clicked')}}>
-                                <img src={UndoIcon} alt="loading..." />
-                            </Button>
-                        </Card>
-                        <Card isDone='done' taskTitle='Sample Title' taskDesc={lorem}>
-                            <Button btnclass='undo' onClick={() => {alert('clicked')}}>
-                                <img src={UndoIcon} alt="loading..." />
-                            </Button>
-                        </Card>
+                        <Components.Card isDone='done' lineThrough='strikethrough' taskTitle='Sample Title' taskDesc={lorem}>
+                            <Components.Button btnclass='undo' onClick={() => {alert('clicked')}}>
+                                <img src={Assets.UndoIcon} alt="loading..." />
+                            </Components.Button>
+                        </Components.Card>
                     </div>
                 </div>
             </div>
