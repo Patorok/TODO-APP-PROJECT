@@ -11,6 +11,8 @@ import UndoIcon from './undo-icon.svg';
 import Danger from './danger-icon.svg';
 import Question from './questionmark-icon.svg';
 import ResetIcon from './clear-done-task.svg';
+import Add from './create-icon.svg';
+import Update from './edit.svg';
 
 // export { Logo, ListIcon, DoneIcon, CreateIcon, CleanIcon, DoneAllIcon, EditIcon, RemoveIcon, ClearIcon, UndoIcon };
 
@@ -27,5 +29,7 @@ export const Assets = {
     UndoIcon,
     Danger,
     Question,
-    ResetIcon
+    ResetIcon,
+    Add,
+    Update
 }

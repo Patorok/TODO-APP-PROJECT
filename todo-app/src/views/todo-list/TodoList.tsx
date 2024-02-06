@@ -1,17 +1,33 @@
 import './TodoList.css';
-// import { useState } from 'react';
+import React, { useState } from 'react';
 import { Assets } from '../../assets/assets';
 import { Components } from '../../components/components';
+import { Task } from '../../models/Task';
 
-const TodoList = () => {
+const TodoList: React.FC = () => {
 
     const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing';
+    
+    const [selectTask, setSelectTask] = useState<Task[] | null>(null);
 
-    // const [selectTask, setSelectTask] = useState<Task | null>(null);
+    let taskItem: Task[] = [
+        {
+            task_id: 1,
+            task_title: 'Sample Title',
+            task_desc: lorem,
+            task_status: false
+        },
+        {
+            task_id: 2,
+            task_title: 'Sample Title',
+            task_desc: lorem,
+            task_status: false
+        }
+    ];
 
-    // const handleSampleClick = (task: any) => {
-    //     setSelectTask(task);
-    // };
+    const handleSampleClick = (task: Task[]) => {
+        setSelectTask(task);
+    };
 
     const checkbox = (
         <div className="form-check m-0">
@@ -26,7 +42,8 @@ const TodoList = () => {
       
     return (
         <>  
-            <Components.Modal></Components.Modal>
+            <Components.FormModal />
+            <Components.Modal taskAttr={selectTask}/>
             <div className='header d-md-flex justify-content-between align-items-center m-4 p-3 pt-0 pb-2'>
                 <img src={Assets.Logo} alt="Loading..." />
                 <div className='title fw-bold'>
@@ -45,14 +62,14 @@ const TodoList = () => {
 
                         <div className="utils col-lg-6">
                             <div className="d-flex justify-content-end align-items-center">
-                                <Components.Button dataBsToggle="modal" targetModal="#doneDialog" btnclass='done' >
+                                <Components.Button dataBsToggle="modal" targetModal="doneDialog" btnclass='done' >
                                     <img src={Assets.DoneAllIcon} alt="loading..." />
                                     <span className='ps-2'>Done all</span>
                                 </Components.Button>
-                                <Components.Button btnclass='create'>
+                                <Components.Button dataBsToggle="modal" targetModal="createForm" btnclass='create'>
                                     <img src={Assets.CreateIcon} alt="loading..." />
                                 </Components.Button>
-                                <Components.Button dataBsToggle="modal" targetModal="#deleteDialog" btnclass='clean'>
+                                <Components.Button dataBsToggle="modal" targetModal="deleteDialog" btnclass='clean'>
                                     <img src={Assets.CleanIcon} alt="loading..." />
                                 </Components.Button>
                             </div>
@@ -62,10 +79,10 @@ const TodoList = () => {
                     {/* Task list part */}
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
                         <Components.Card checkbox={checkbox} taskTitle='Sample Title' taskDesc={lorem}>
-                            <Components.Button btnclass='edit' onClick={() => {alert('clicked')}}>
+                            <Components.Button dataBsToggle="modal" targetModal="editForm" btnclass='edit' onClick={() => {handleSampleClick(taskItem)}}>
                                 <img src={Assets.EditIcon} alt="loading..." />
                             </Components.Button>
-                            <Components.Button btnclass='delete' onClick={() => {alert('clicked')}}>
+                            <Components.Button dataBsToggle="modal" targetModal="singleDelete" btnclass='delete' onClick={() => {handleSampleClick(taskItem)}}>
                                 <img src={Assets.RemoveIcon} alt="loading..." />
                             </Components.Button>
                         </Components.Card>
@@ -84,7 +101,11 @@ const TodoList = () => {
 
                         <div className="utils col-lg-4">
                             <div className="d-flex justify-content-end align-items-center">
-                                <Components.Button dataBsToggle="modal" targetModal="#clearDonesDialog" btnclass='delete'>
+                                <Components.Button dataBsToggle="modal" 
+                                    targetModal="clearDonesDialog" 
+                                    btnclass='delete' 
+                                    // onClick={() => {alert('clean done task')}}
+                                >
                                     <img src={Assets.ClearIcon} alt="loading..." />
                                     <span className='ps-2'>Clear</span>
                                 </Components.Button>

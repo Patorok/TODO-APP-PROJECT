@@ -16,7 +16,6 @@
 
         p{
             color: #6B7280;
-            text-align: justify;
             font-family: 'Inter', sans-serif;
         }
     }
@@ -32,9 +31,3 @@
         font-weight: 400!important;
     }
 }
-
-/*
-#F9FAFB
-#111827
-#6B7280 
-*/

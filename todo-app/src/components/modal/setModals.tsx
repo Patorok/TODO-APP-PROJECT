@@ -8,6 +8,7 @@ interface TaskProps {
 const setModals = ({taskAttr}: TaskProps) => {
   return (
     <>
+        {/*Multiple Selection*/}
         <Modal 
             id='deleteDialog' 
             modalTitle='Delete All' 
@@ -34,9 +35,21 @@ const setModals = ({taskAttr}: TaskProps) => {
             modalMsg='Are you sure you want to clean all completed todos?'
             btnName='Clean'
             btnColor='warning'
-            onClick={() => {alert('clean all done tasks' + taskAttr)}}
+            onClick={() => {alert('clean all completed tasks')}}
         >
             <img src={Assets.ResetIcon} alt="Loading..." />
+        </Modal>
+        
+        {/* Single Selection */}
+        <Modal 
+            id='singleDelete' 
+            modalTitle='Delete Task' 
+            modalMsg={`Are you sure you want to delete this task?`}
+            btnName='Delete'
+            btnColor='danger'
+            onClick={() => {alert(`clean all completed tasks ${taskAttr.task_id}`)}}
+        >
+            <img src={Assets.Danger} alt="Loading..." />
         </Modal>
     </>
   )

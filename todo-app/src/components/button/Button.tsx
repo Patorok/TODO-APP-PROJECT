@@ -15,7 +15,7 @@ const Button = ({ children, onClick, btnclass, targetModal, dataBsToggle }: Butt
                 className={"default btn border-0 " + btnclass} 
                 onClick={onClick}
                 data-bs-toggle={dataBsToggle}
-                data-bs-target={targetModal}
+                data-bs-target={`#${targetModal}`}
             >
                 {children}
             </button>
