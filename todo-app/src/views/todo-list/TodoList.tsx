@@ -17,12 +17,6 @@ const TodoList: React.FC = () => {
             task_desc: lorem,
             task_status: false
         },
-        {
-            task_id: 2,
-            task_title: 'Sample Title',
-            task_desc: lorem,
-            task_status: false
-        }
     ];
 
     const handleSampleClick = (task: Task[]) => {

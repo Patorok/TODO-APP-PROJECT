@@ -1,5 +1,4 @@
 import './App.css';
-import "bootstrap-icons/font/bootstrap-icons.css";
 import TodoList from "./views/todo-list";
 
 // import { useState } from "react";
