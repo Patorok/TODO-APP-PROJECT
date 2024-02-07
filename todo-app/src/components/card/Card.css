@@ -28,12 +28,11 @@
         
         .card-text{
             color: #9D71BC;
-            text-align: justify;
         }
     }
 }
 
-.card.done{
+.card.checked{
     .card-body{
         padding: 1.25em!important;
         border-left: 5px solid #838383!important;
@@ -51,35 +50,58 @@
         }
 
         /* Strikethrough */
-
         .strikethrough {
-            /* display: inline-block; */
             position: relative;
             transition: all 0.5s cubic-bezier(.55, 0, .1, 1);
         }
-
+        
         .strikethrough:after {
             content: '';
             position: absolute;
             display: block;
-            width: 100%;
+            width: 0; /* Set initial width to zero */
             height: 2px;
             margin-top: -0.6em;
             background: #a7a7a7;
             transform-origin: center left;
-            animation: strikethrough 1s 0.5s cubic-bezier(.55, 0, .1, 1) 1;
-            transition: transform 0.5s cubic-bezier(.55, 0, .1, 1);
+            animation: strikethrough 1s 0.5s cubic-bezier(.55, 0, .1, 1) forwards; /* forwards to retain end state */
+            transition: width 0.5s cubic-bezier(.55, 0, .1, 1); /* Transition width */
+        }
+        
+    }
+}
+
+.card.done{
+    .card-body{
+        padding: 1.25em!important;
+        border-left: 5px solid #838383!important;
+
+        .card-title{
+            color: #a7a7a7;
+            font-family: 'Roboto Slab', serif;
+            text-decoration: line-through;
+        }
+        
+        .card-text{
+            color: #a7a7a7;
+            text-align: justify;
+            text-decoration: line-through;
         }
     }
 }
 
+@keyframes strikethrough {
+    to {
+        width: 100%; /* Animate width to 100% */
+    }
+}
 /* Keyframes for initial animation */
 
-@keyframes strikethrough {
+/* @keyframes strikethrough {
 	from {
 		transform: scaleX(0);
 	}
 	to {
 		transform: scaleX(1);
 	}
-}
+} */

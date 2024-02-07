@@ -1,43 +1,45 @@
-import './TodoList.css';
-import React, { useState } from 'react';
+import './TodoApp.css';
+import React from 'react';
+import EditTodo from './EditTodo';
+import CreateTodo from './CreateTodo';
 import { Assets } from '../../assets/assets';
+import useCreateTodo from '../../hooks/useTodoList';
 import { Components } from '../../components/components';
-import { Task } from '../../models/Task';
 
-const TodoList: React.FC = () => {
+const TodoList: React.FC = () => {    
+    const { 
+        tasks, isDone, lineThrough,
+        desc, setDesc, 
+        title, setTitle,
+        selectTaskId,
+        selectTaskDesc, setSelectTaskDesc,
+        selectTaskTitle, setSelectTaskTitle,
+        handleEditTask, handleSelectedId, handleCreateTask, 
+        handleDeleteTask, handleUpdateStatus
+    } = useCreateTodo();
 
-    const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing';
-    
-    const [selectTask, setSelectTask] = useState<Task[] | null>(null);
+    console.log(isDone, lineThrough);
 
-    let taskItem: Task[] = [
-        {
-            task_id: 1,
-            task_title: 'Sample Title',
-            task_desc: lorem,
-            task_status: false
-        },
-    ];
-
-    const handleSampleClick = (task: Task[]) => {
-        setSelectTask(task);
-    };
-
-    const checkbox = (
-        <div className="form-check m-0">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="isDone"
-          />
-        </div>
-    );
+    const filteredTasks = tasks.filter(task => !task.task_status);
       
     return (
         <>  
-            <Components.FormModal />
-            <Components.Modal taskAttr={selectTask}/>
+            <Components.Modal onSingleDelete={handleDeleteTask}/>
+
+            <CreateTodo title={title} setTitle={setTitle} 
+                desc={desc} setDesc={setDesc} 
+                handleCreateTask={handleCreateTask} 
+                Component={Components.FormModal} 
+                icon={Assets.Add}
+            />
+
+            <EditTodo title={selectTaskTitle} setTitle={setSelectTaskTitle} 
+                desc={selectTaskDesc} setDesc={setSelectTaskDesc} 
+                handleEditTask={handleEditTask} 
+                Component={Components.FormModal} 
+                icon={Assets.Update}
+            />
+
             <div className='header d-md-flex justify-content-between align-items-center m-4 p-3 pt-0 pb-2'>
                 <img src={Assets.Logo} alt="Loading..." />
                 <div className='title fw-bold'>
@@ -72,14 +74,37 @@ const TodoList: React.FC = () => {
 
                     {/* Task list part */}
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
-                        <Components.Card checkbox={checkbox} taskTitle='Sample Title' taskDesc={lorem}>
-                            <Components.Button dataBsToggle="modal" targetModal="editForm" btnclass='edit' onClick={() => {handleSampleClick(taskItem)}}>
-                                <img src={Assets.EditIcon} alt="loading..." />
-                            </Components.Button>
-                            <Components.Button dataBsToggle="modal" targetModal="singleDelete" btnclass='delete' onClick={() => {handleSampleClick(taskItem)}}>
-                                <img src={Assets.RemoveIcon} alt="loading..." />
-                            </Components.Button>
-                        </Components.Card>
+                        {filteredTasks.length === 0 ? (
+                            <div className="notask p-3 text-center">
+                                <div><img src={Assets.NoTask} alt="Loading..." /></div>
+                                <div className="mt-3 fs-5">No tasks to do!</div>
+                            </div>
+                        ) : (
+                            filteredTasks.map(task => (
+                                <Components.Card key={task.task_id}
+                                    checkbox={true}
+                                    taskTitle={task.task_title} 
+                                    taskDesc={task.task_desc}
+                                    isDone={selectTaskId === task.task_id ? isDone : ''}
+                                    lineThrough={selectTaskId === task.task_id ? lineThrough : ''}
+                                    onChange={() => handleUpdateStatus(task.task_id)}>
+                                    <Components.Button dataBsToggle="modal" 
+                                        targetModal="editForm" 
+                                        btnclass='edit' 
+                                        onClick={() => handleSelectedId(task.task_id, task.task_title, task.task_desc)}
+                                    >
+                                        <img src={Assets.EditIcon} alt="loading..." />
+                                    </Components.Button>
+                                    <Components.Button dataBsToggle="modal" 
+                                        targetModal="singleDelete" 
+                                        btnclass='delete' 
+                                        onClick={() => handleSelectedId(task.task_id, task.task_title, task.task_desc)}
+                                    >
+                                        <img src={Assets.RemoveIcon} alt="loading..." />
+                                    </Components.Button>
+                                </Components.Card>
+                            ))
+                        )}
                     </div>
                 </div>
 
@@ -108,11 +133,11 @@ const TodoList: React.FC = () => {
                     </div>
 
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
-                        <Components.Card isDone='done' lineThrough='strikethrough' taskTitle='Sample Title' taskDesc={lorem}>
+                        {/* <Components.Card isDone='done' lineThrough='strikethrough' taskTitle='Sample Title' taskDesc={lorem}>
                             <Components.Button btnclass='undo' onClick={() => {alert('clicked')}}>
                                 <img src={Assets.UndoIcon} alt="loading..." />
                             </Components.Button>
-                        </Components.Card>
+                        </Components.Card> */}
                     </div>
                 </div>
             </div>

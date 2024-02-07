@@ -48,6 +48,14 @@
         background-color: #5E1B89;
     }
 
+    .btn-orange{
+        background-color: #F97316;
+    }
+
+    .btn-orange:hover{
+        background-color: #e06913;
+    }
+    
     .btn-purple:hover{
         background-color: #8739b8;
     }

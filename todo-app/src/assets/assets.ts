@@ -13,6 +13,7 @@ import Question from './questionmark-icon.svg';
 import ResetIcon from './clear-done-task.svg';
 import Add from './create-icon.svg';
 import Update from './edit.svg';
+import NoTask from './notask-icon.svg';
 
 // export { Logo, ListIcon, DoneIcon, CreateIcon, CleanIcon, DoneAllIcon, EditIcon, RemoveIcon, ClearIcon, UndoIcon };
 
@@ -31,5 +32,6 @@ export const Assets = {
     Question,
     ResetIcon,
     Add,
-    Update
+    Update,
+    NoTask
 }

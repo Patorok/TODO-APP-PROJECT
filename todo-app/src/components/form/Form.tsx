@@ -5,12 +5,13 @@ interface FormProps {
     formIcon: any;
     btnName:string;
     btnColor:string;
+    closeId: string;
     modalTitle:string;
     onClick: () => void; 
     children?: React.ReactNode;
 }
 
-const Form = ({id, formIcon, btnName, btnColor, modalTitle, onClick, children}:FormProps) => {
+const Form = ({id, formIcon, btnName, btnColor, closeId, modalTitle, onClick, children}:FormProps) => {
     return (
         <>
             <div className="modal fade" id={id} aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -27,7 +28,7 @@ const Form = ({id, formIcon, btnName, btnColor, modalTitle, onClick, children}:F
                                 </div>
                             </div>
                             <div className="modal-footer border-0">
-                                <button type="reset" id='closeForm' className="btn btn-light border text-dark m-0" data-bs-dismiss="modal">Cancel</button>
+                                <button type="reset" id={closeId} className="btn btn-light border text-dark m-0" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" className={"btn m-0 ms-3 text-light btn-" + btnColor} onClick={onClick}>{btnName}</button>
                             </div>
                         </form>

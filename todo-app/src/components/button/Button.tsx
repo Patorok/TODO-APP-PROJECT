@@ -2,15 +2,15 @@ import './Button.css';
 
 interface ButtonProps {
     btnclass?: string;
-    onClick?: () => void;
-    children?: React.ReactNode;
     targetModal?:string;
     dataBsToggle?:string;
+    onClick?: () => void;
+    children?: React.ReactNode;
 }
 
 const Button = ({ children, onClick, btnclass, targetModal, dataBsToggle }: ButtonProps) => {
     return (
-        <>
+        <div>
             <button type='button' 
                 className={"default btn border-0 " + btnclass} 
                 onClick={onClick}
@@ -19,7 +19,7 @@ const Button = ({ children, onClick, btnclass, targetModal, dataBsToggle }: Butt
             >
                 {children}
             </button>
-        </>
+        </div>
     );
 }
 

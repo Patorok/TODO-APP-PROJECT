@@ -1,24 +1,37 @@
 import './Card.css';
 
 interface CardProps {
-    checkbox?: any;
-    children?: React.ReactNode;
+    isDone?: string;
     taskDesc: string;
     taskTitle: string;
-    isDone?: string;
+    checkbox?: boolean;
     lineThrough?: string;
+    children?: React.ReactNode;
+
+    onChange: () => void;
 }
 
-const Card = ({ taskTitle, taskDesc, checkbox, children, isDone, lineThrough }: CardProps) => {
+const Card: React.FC<CardProps> = ({ taskTitle, taskDesc, checkbox, children, isDone, lineThrough, onChange }) => {
+    
     return (
         <>
             <div className="col-12 p-4 pt-0">
-                <div className={"card shadow rounded-2 " + isDone}>
+            <div className={"card shadow rounded-2 " + isDone}>
                     <div className="card-body rounded-2 d-flex align-items-center justify-content-between">
-                        {checkbox}
-                        <div>
-                            <h5 className="card-title fw-bold"><span className={lineThrough}>{taskTitle}</span></h5>
-                            <p className="card-text text-justify"><span className={lineThrough}>{taskDesc}</span></p>
+                        <div className="d-flex align-items-center">
+                            {checkbox && (
+                                <div className="form-check m-0">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={onChange}
+                                    />
+                                </div>
+                            )}
+                            <div className="ms-3">
+                                <h5 className="card-title fw-bold"><span className={lineThrough}>{taskTitle}</span></h5>
+                                <p className="card-text text-justify"><span className={lineThrough}>{taskDesc}</span></p>
+                            </div>
                         </div>
                         <div className="buttons d-md-flex justify-content-between">
                             {children}

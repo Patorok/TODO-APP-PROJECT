@@ -27,7 +27,7 @@ const Modal = ({id, children, modalTitle, modalMsg, onClick, btnName, btnColor}:
                         </div>
                         <div className="modal-footer border-0">
                             <button type="button" className="btn btn-light border text-dark m-0" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" className={"btn m-0 ms-3 text-light btn-" + btnColor} onClick={onClick}>{btnName}</button>
+                            <button type="button" className={"btn m-0 ms-3 text-light btn-" + btnColor} data-bs-dismiss="modal" onClick={onClick}>{btnName}</button>
                         </div>
                     </div>
                 </div>

@@ -3,12 +3,6 @@ import { Assets } from '../../assets/assets';
 import React, { useState } from 'react';
 import { Task } from '../../models/Task';
 
-// interface FormProps {
-//     task_id?:number;
-//     task_title?: string;
-//     task_desc?: string;
-// }
-
 const setForm: React.FC = () => {
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
