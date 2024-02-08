@@ -48,26 +48,6 @@
             text-align: justify;
             /* text-decoration: line-through; */
         }
-
-        /* Strikethrough */
-        .strikethrough {
-            position: relative;
-            transition: all 0.5s cubic-bezier(.55, 0, .1, 1);
-        }
-        
-        .strikethrough:after {
-            content: '';
-            position: absolute;
-            display: block;
-            width: 0; /* Set initial width to zero */
-            height: 2px;
-            margin-top: -0.6em;
-            background: #a7a7a7;
-            transform-origin: center left;
-            animation: strikethrough 1s 0.5s cubic-bezier(.55, 0, .1, 1) forwards; /* forwards to retain end state */
-            transition: width 0.5s cubic-bezier(.55, 0, .1, 1); /* Transition width */
-        }
-        
     }
 }
 
@@ -88,6 +68,26 @@
             text-decoration: line-through;
         }
     }
+
+}
+
+/* Strikethrough */
+.strikethrough {
+    position: relative;
+    transition: all 0.5s cubic-bezier(.55, 0, .1, 1);
+}
+
+.strikethrough:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0; /* Set initial width to zero */
+    height: 2px;
+    margin-top: -0.6em;
+    background: #a7a7a7;
+    transform-origin: center left;
+    animation: strikethrough 0.5s 0.5s cubic-bezier(.55, 0, .1, 1) forwards; /* forwards to retain end state */
+    transition: width 0.5s cubic-bezier(.55, 0, .1, 1); /* Transition width */
 }
 
 @keyframes strikethrough {
@@ -95,13 +95,3 @@
         width: 100%; /* Animate width to 100% */
     }
 }
-/* Keyframes for initial animation */
-
-/* @keyframes strikethrough {
-	from {
-		transform: scaleX(0);
-	}
-	to {
-		transform: scaleX(1);
-	}
-} */

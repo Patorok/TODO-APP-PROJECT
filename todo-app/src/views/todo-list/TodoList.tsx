@@ -11,16 +11,14 @@ const TodoList: React.FC = () => {
         tasks, isDone, lineThrough,
         desc, setDesc, 
         title, setTitle,
-        selectTaskId,
+        selectTaskId, disabled,
         selectTaskDesc, setSelectTaskDesc,
         selectTaskTitle, setSelectTaskTitle,
         handleEditTask, handleSelectedId, handleCreateTask, 
-        handleDeleteTask, handleUpdateStatus
+        handleDeleteTask, handleUpdateStatus, handleUndoTask
     } = useCreateTodo();
 
-    console.log(isDone, lineThrough);
-
-    const filteredTasks = tasks.filter(task => !task.task_status);
+    // const filteredTasks = tasks.filter(task => !task.task_status);
       
     return (
         <>  
@@ -74,20 +72,22 @@ const TodoList: React.FC = () => {
 
                     {/* Task list part */}
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
-                        {filteredTasks.length === 0 ? (
+                        {tasks.filter(task => !task.task_status).length === 0 ? (
                             <div className="notask p-3 text-center">
                                 <div><img src={Assets.NoTask} alt="Loading..." /></div>
                                 <div className="mt-3 fs-5">No tasks to do!</div>
                             </div>
                         ) : (
-                            filteredTasks.map(task => (
+                            tasks.filter(task => !task.task_status).map(task => (
                                 <Components.Card key={task.task_id}
                                     checkbox={true}
-                                    taskTitle={task.task_title} 
                                     taskDesc={task.task_desc}
+                                    taskTitle={task.task_title}
+                                    disabledCheck={disabled}
+                                    onChange={() => handleUpdateStatus(task.task_id)}
                                     isDone={selectTaskId === task.task_id ? isDone : ''}
                                     lineThrough={selectTaskId === task.task_id ? lineThrough : ''}
-                                    onChange={() => handleUpdateStatus(task.task_id)}>
+                                    >
                                     <Components.Button dataBsToggle="modal" 
                                         targetModal="editForm" 
                                         btnclass='edit' 
@@ -138,6 +138,29 @@ const TodoList: React.FC = () => {
                                 <img src={Assets.UndoIcon} alt="loading..." />
                             </Components.Button>
                         </Components.Card> */}
+                        {tasks.filter(task => task.task_status).length === 0 ? (
+                            <div className="notask p-3 text-center">
+                                <div><img src={Assets.NoTask} alt="Loading..." /></div>
+                                <div className="mt-3 fs-5">No tasks to do!</div>
+                            </div>
+                        ) : (
+                            tasks.filter(task => task.task_status).map(task => (
+                                <Components.Card key={task.task_id}
+                                    taskTitle={task.task_title}
+                                    taskDesc={task.task_desc}
+                                    isDone="done"
+                                    lineThrough="reverse-strikethrough"
+                                    >
+                                    <Components.Button 
+                                        btnclass="undo"
+                                        disabledBtn={disabled}
+                                        onClick={() => {handleUndoTask(task.task_id)}}
+                                    >
+                                        <img src={Assets.UndoIcon} alt="loading..." />
+                                    </Components.Button>
+                                </Components.Card>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>

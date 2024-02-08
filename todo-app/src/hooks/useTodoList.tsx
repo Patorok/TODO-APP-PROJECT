@@ -95,12 +95,15 @@ const useCreateTodo = () => {
 
     const [isDone, setIsDone] = useState<string>('');
     const [lineThrough, setLineThrough] = useState<string>('');
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     // Function to mark a task as done
     const handleUpdateStatus = (id: number) => {
         setSelectTaskId(id);
         setIsDone('checked');
         setLineThrough('strikethrough');
+        setDisabled(true);
+
         setTimeout(() => {
             const updatedTasks = tasks.map(task =>
                 task.task_id === id ? { ...task, task_status: !task.task_status } : task
@@ -111,7 +114,18 @@ const useCreateTodo = () => {
 
             setIsDone('');
             setLineThrough('');
-        }, 1500);
+            setDisabled(false);
+        }, 1000);
+    }
+
+    // Function to undo a task
+    const handleUndoTask = (id: number) => {
+        const updatedTasks = tasks.map(task =>
+            task.task_id === id ? { ...task, task_status: !task.task_status } : task
+        );
+
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
     }
 
     return {
@@ -121,6 +135,7 @@ const useCreateTodo = () => {
         setDesc,
         tasks,
         isDone,
+        disabled,
         lineThrough,
         selectTaskId,
         selectTaskTitle,
@@ -132,7 +147,8 @@ const useCreateTodo = () => {
         handleCreateTask,
         handleEditTask,
         handleDeleteTask,
-        handleUpdateStatus
+        handleUpdateStatus,
+        handleUndoTask
     };
 }
 

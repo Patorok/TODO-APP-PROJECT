@@ -7,11 +7,12 @@ interface CardProps {
     checkbox?: boolean;
     lineThrough?: string;
     children?: React.ReactNode;
+    disabledCheck?: boolean;
 
-    onChange: () => void;
+    onChange?: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ taskTitle, taskDesc, checkbox, children, isDone, lineThrough, onChange }) => {
+const Card: React.FC<CardProps> = ({ taskTitle, taskDesc, checkbox, children, isDone, lineThrough, disabledCheck, onChange }) => {
     
     return (
         <>
@@ -25,6 +26,7 @@ const Card: React.FC<CardProps> = ({ taskTitle, taskDesc, checkbox, children, is
                                         className="form-check-input"
                                         type="checkbox"
                                         onClick={onChange}
+                                        disabled={disabledCheck}
                                     />
                                 </div>
                             )}

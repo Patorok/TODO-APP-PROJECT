@@ -6,9 +6,10 @@ interface ButtonProps {
     dataBsToggle?:string;
     onClick?: () => void;
     children?: React.ReactNode;
+    disabledBtn?: boolean;
 }
 
-const Button = ({ children, onClick, btnclass, targetModal, dataBsToggle }: ButtonProps) => {
+const Button = ({ children, onClick, btnclass, targetModal, dataBsToggle, disabledBtn }: ButtonProps) => {
     return (
         <div>
             <button type='button' 
@@ -16,6 +17,7 @@ const Button = ({ children, onClick, btnclass, targetModal, dataBsToggle }: Butt
                 onClick={onClick}
                 data-bs-toggle={dataBsToggle}
                 data-bs-target={`#${targetModal}`}
+                disabled={disabledBtn}
             >
                 {children}
             </button>
