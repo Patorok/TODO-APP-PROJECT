@@ -17,8 +17,6 @@ const TodoList: React.FC = () => {
         handleEditTask, handleSelectedId, handleCreateTask, 
         handleDeleteTask, handleUpdateStatus, handleUndoTask
     } = useCreateTodo();
-
-    // const filteredTasks = tasks.filter(task => !task.task_status);
       
     return (
         <>  
@@ -44,10 +42,10 @@ const TodoList: React.FC = () => {
                     To-do List!
                 </div>
             </div>
-            <div className="row m-4 pt-3">
+            <div className="row m-md-4 pt-3 todos-container">
                 <div className="task-list col-lg-6">
                     <div className="row align-items-center">
-                        <div className='col-lg-6 d-flex align-items-center justify-content-lg-between'>
+                        <div className='todo-header col-lg-6 d-flex align-items-center justify-content-lg-between'>
                             <img className='list-icon' src={Assets.ListIcon} alt="Loading..." />
                             <div className='list-title fw-bold fs-1'>
                                 Task List!
@@ -110,8 +108,8 @@ const TodoList: React.FC = () => {
 
                 {/*Done task part*/}
                 <div className="task-list col-lg-6 border-0">
-                    <div className="row align-items-center ps-3">
-                        <div className='col-lg-8 d-flex align-items-center'>
+                    <div className="row align-items-center">
+                        <div className='todo-header col-lg-8 d-flex align-items-center'>
                             <img className='list-icon me-4' src={Assets.DoneIcon} alt="Loading..." />
                             <div className='list-title fw-bold fs-1'>
                                 Done Task!
@@ -133,11 +131,6 @@ const TodoList: React.FC = () => {
                     </div>
 
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
-                        {/* <Components.Card isDone='done' lineThrough='strikethrough' taskTitle='Sample Title' taskDesc={lorem}>
-                            <Components.Button btnclass='undo' onClick={() => {alert('clicked')}}>
-                                <img src={Assets.UndoIcon} alt="loading..." />
-                            </Components.Button>
-                        </Components.Card> */}
                         {tasks.filter(task => task.task_status).length === 0 ? (
                             <div className="notask p-3 text-center">
                                 <div><img src={Assets.NoTask} alt="Loading..." /></div>
@@ -149,7 +142,6 @@ const TodoList: React.FC = () => {
                                     taskTitle={task.task_title}
                                     taskDesc={task.task_desc}
                                     isDone="done"
-                                    lineThrough="reverse-strikethrough"
                                     >
                                     <Components.Button 
                                         btnclass="undo"

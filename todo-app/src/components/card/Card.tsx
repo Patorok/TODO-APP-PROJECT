@@ -32,7 +32,7 @@ const Card: React.FC<CardProps> = ({ taskTitle, taskDesc, checkbox, children, is
                             )}
                             <div className="ms-3">
                                 <h5 className="card-title fw-bold"><span className={lineThrough}>{taskTitle}</span></h5>
-                                <p className="card-text text-justify"><span className={lineThrough}>{taskDesc}</span></p>
+                                <p className="card-text"><span className={lineThrough}>{taskDesc}</span></p>
                             </div>
                         </div>
                         <div className="buttons d-md-flex justify-content-between">

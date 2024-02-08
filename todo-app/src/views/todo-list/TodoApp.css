@@ -41,17 +41,24 @@ img {
 }
 
 @media screen and (max-width: 768px){
+    .todos-container{
+        margin-top: 0px!important;
+        .task-list{
+            padding-top: 20px;
+            border-right: none;
+            
+            .todo-header{
+                padding: 0px 30px;
+            }
 
-    .task-list{
-        border-right: none;
-
-        .list-icon{
-            margin-right: 20px;
-        }
-    
-    
-        .utils{
-            margin-top: 20px!important;
+            .list-icon{
+                margin-right: 20px;
+            }
+        
+        
+            .utils{
+                margin-top: 20px!important;
+            }
         }
     }
 }

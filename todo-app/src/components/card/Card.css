@@ -28,6 +28,8 @@
         
         .card-text{
             color: #9D71BC;
+            font-family: 'Lato', sans-serif;
+            text-align: justify;
         }
     }
 }
@@ -89,6 +91,7 @@
     animation: strikethrough 0.5s 0.5s cubic-bezier(.55, 0, .1, 1) forwards; /* forwards to retain end state */
     transition: width 0.5s cubic-bezier(.55, 0, .1, 1); /* Transition width */
 }
+
 
 @keyframes strikethrough {
     to {
