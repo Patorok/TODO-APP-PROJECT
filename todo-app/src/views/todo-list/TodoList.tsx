@@ -103,9 +103,9 @@ const TodoList: React.FC = () => {
                     </div>
 
                     {/* Task list part */}
-                    <div className="task-list-content scrollbar row mt-md-5 overflow-auto">
+                    <div className="task-list-content scrollbar row mt-3 overflow-auto">
                         {tasks.filter(task => !task.task_status).length === 0 ? (
-                            <div className="notask p-3 mt-4 text-center">
+                            <div className="notask p-3 mt-md-4 text-center">
                                 <div><img src={Assets.NoTask} alt="Loading..." /></div>
                                 <div className="mt-1 fs-5">
                                     <p className="m-0">No tasks added yet.</p>
@@ -166,9 +166,9 @@ const TodoList: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="task-list-content scrollbar row mt-md-5 overflow-auto">
+                    <div className="task-list-content scrollbar row mt-3 overflow-auto">
                         {tasks.filter(task => task.task_status).length === 0 ? (
-                            <div className="notask p-3 mt-4  text-center">
+                            <div className="notask p-3 mt-md-4  text-center">
                                 <div><img src={Assets.NoDone} alt="Loading..." /></div>
                                 <div className="mt-1 fs-5">
                                     <p className="m-0">No completed tasks yet. </p>
