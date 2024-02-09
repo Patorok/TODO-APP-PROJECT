@@ -7,43 +7,62 @@ import useCreateTodo from '../../hooks/useTodoList';
 import { Components } from '../../components/components';
 
 const TodoList: React.FC = () => {    
-    const { 
-        tasks, isDone, lineThrough,
+    // Destructuring from the useCreateTodo hook
+    const {
+        tasks,          
+        isDone,          
+        lineThrough,    
         desc, setDesc, 
-        title, setTitle,
-        selectTaskId, disabled,
-        selectTaskDesc, setSelectTaskDesc,
-        selectTaskTitle, setSelectTaskTitle,
-        handleEditTask, handleSelectedId, handleCreateTask, 
-        handleDeleteTask, handleUpdateStatus, handleUndoTask
+        title, setTitle, 
+        selectTaskId,
+        disabled,
+        alertColor,
+        alertVisible,
+        alertMessage,
+        handleEditTask,
+        handleSelectedId, 
+        handleCreateTask, 
+        handleDeleteTask, 
+        handleUpdateStatus,
+        handleUndoTask,    
+        handleDeleteAllTasks,
+        handleDoneAll,     
+        handleDoneDelete      
     } = useCreateTodo();
       
     return (
         <>  
-            <Components.Modal onSingleDelete={handleDeleteTask}/>
-
+            <Components.Modal 
+                onSingleDelete={handleDeleteTask} 
+                onMultipleDelete={handleDeleteAllTasks}
+                onDoneAll={handleDoneAll}
+                onDoneDelete={handleDoneDelete}
+            />
             <CreateTodo title={title} setTitle={setTitle} 
                 desc={desc} setDesc={setDesc} 
                 handleCreateTask={handleCreateTask} 
                 Component={Components.FormModal} 
                 icon={Assets.Add}
             />
-
-            <EditTodo title={selectTaskTitle} setTitle={setSelectTaskTitle} 
-                desc={selectTaskDesc} setDesc={setSelectTaskDesc} 
+            <EditTodo title={title} setTitle={setTitle} 
+                desc={desc} setDesc={setDesc} 
                 handleEditTask={handleEditTask} 
                 Component={Components.FormModal} 
                 icon={Assets.Update}
             />
 
-            <div className='header d-md-flex justify-content-between align-items-center m-4 p-3 pt-0 pb-2'>
+            <Components.Alert visible={alertVisible} text={alertMessage}color={alertColor}/>
+
+            <div className='header d-md-flex justify-content-between align-items-center m-md-4 p-3 pt-0 pb-2'>
                 <img src={Assets.Logo} alt="Loading..." />
                 <div className='title fw-bold'>
                     To-do List!
                 </div>
             </div>
+
             <div className="row m-md-4 pt-3 todos-container">
-                <div className="task-list col-lg-6">
+                {/*To do task part*/}
+                <div className="task-list col-lg-6 pb-md-4">
                     <div className="row align-items-center">
                         <div className='todo-header col-lg-6 d-flex align-items-center justify-content-lg-between'>
                             <img className='list-icon' src={Assets.ListIcon} alt="Loading..." />
@@ -58,7 +77,16 @@ const TodoList: React.FC = () => {
                                     <img src={Assets.DoneAllIcon} alt="loading..." />
                                     <span className='ps-2'>Done all</span>
                                 </Components.Button>
-                                <Components.Button dataBsToggle="modal" targetModal="createForm" btnclass='create'>
+                                <Components.Button 
+                                    dataBsToggle="modal" 
+                                    targetModal="createForm" 
+                                    btnclass='create' 
+                                    onClick={
+                                        ()=> {
+                                            setTitle(''), 
+                                            setDesc('')
+                                        }
+                                    }>
                                     <img src={Assets.CreateIcon} alt="loading..." />
                                 </Components.Button>
                                 <Components.Button dataBsToggle="modal" targetModal="deleteDialog" btnclass='clean'>
@@ -71,18 +99,21 @@ const TodoList: React.FC = () => {
                     {/* Task list part */}
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
                         {tasks.filter(task => !task.task_status).length === 0 ? (
-                            <div className="notask p-3 text-center">
+                            <div className="notask p-3 mt-4 text-center">
                                 <div><img src={Assets.NoTask} alt="Loading..." /></div>
-                                <div className="mt-3 fs-5">No tasks to do!</div>
+                                <div className="mt-1 fs-5">
+                                    <p className="m-0">No tasks added yet.</p>
+                                    <p className="m-0">Why not start by adding one now?</p>
+                                </div>
                             </div>
                         ) : (
-                            tasks.filter(task => !task.task_status).map(task => (
+                            tasks.filter(task => !task.task_status).reverse().map(task => (
                                 <Components.Card key={task.task_id}
                                     checkbox={true}
                                     taskDesc={task.task_desc}
                                     taskTitle={task.task_title}
                                     disabledCheck={disabled}
-                                    onChange={() => handleUpdateStatus(task.task_id)}
+                                    onChange={() => handleUpdateStatus(task.task_id, task.task_title)}
                                     isDone={selectTaskId === task.task_id ? isDone : ''}
                                     lineThrough={selectTaskId === task.task_id ? lineThrough : ''}
                                     >
@@ -107,7 +138,7 @@ const TodoList: React.FC = () => {
                 </div>
 
                 {/*Done task part*/}
-                <div className="task-list col-lg-6 border-0">
+                <div className="task-list col-lg-6 border-0 pb-md-4 ps-md-4">
                     <div className="row align-items-center">
                         <div className='todo-header col-lg-8 d-flex align-items-center'>
                             <img className='list-icon me-4' src={Assets.DoneIcon} alt="Loading..." />
@@ -120,8 +151,7 @@ const TodoList: React.FC = () => {
                             <div className="d-flex justify-content-end align-items-center">
                                 <Components.Button dataBsToggle="modal" 
                                     targetModal="clearDonesDialog" 
-                                    btnclass='delete' 
-                                    // onClick={() => {alert('clean done task')}}
+                                    btnclass='delete'
                                 >
                                     <img src={Assets.ClearIcon} alt="loading..." />
                                     <span className='ps-2'>Clear</span>
@@ -132,12 +162,15 @@ const TodoList: React.FC = () => {
 
                     <div className="task-list-content scrollbar row mt-5 overflow-auto">
                         {tasks.filter(task => task.task_status).length === 0 ? (
-                            <div className="notask p-3 text-center">
-                                <div><img src={Assets.NoTask} alt="Loading..." /></div>
-                                <div className="mt-3 fs-5">No tasks to do!</div>
+                            <div className="notask p-3 mt-4  text-center">
+                                <div><img src={Assets.NoDone} alt="Loading..." /></div>
+                                <div className="mt-1 fs-5">
+                                    <p className="m-0">No completed tasks yet. </p>
+                                    <p className="m-0">Keep going! Completed tasks will appear here.</p>
+                                </div>
                             </div>
                         ) : (
-                            tasks.filter(task => task.task_status).map(task => (
+                            tasks.filter(task => task.task_status).reverse().map(task => (
                                 <Components.Card key={task.task_id}
                                     taskTitle={task.task_title}
                                     taskDesc={task.task_desc}
@@ -149,6 +182,13 @@ const TodoList: React.FC = () => {
                                         onClick={() => {handleUndoTask(task.task_id)}}
                                     >
                                         <img src={Assets.UndoIcon} alt="loading..." />
+                                    </Components.Button>
+                                    <Components.Button dataBsToggle="modal" 
+                                        targetModal="singleDelete" 
+                                        btnclass='delete' 
+                                        onClick={() => handleSelectedId(task.task_id, task.task_title, task.task_desc)}
+                                    >
+                                        <img src={Assets.RemoveIcon} alt="loading..." />
                                     </Components.Button>
                                 </Components.Card>
                             ))

@@ -92,7 +92,6 @@
     transition: width 0.5s cubic-bezier(.55, 0, .1, 1); /* Transition width */
 }
 
-
 @keyframes strikethrough {
     to {
         width: 100%; /* Animate width to 100% */

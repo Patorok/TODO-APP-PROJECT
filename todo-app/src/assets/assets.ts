@@ -14,6 +14,7 @@ import ResetIcon from './clear-done-task.svg';
 import Add from './create-icon.svg';
 import Update from './edit.svg';
 import NoTask from './notask-icon.svg';
+import NoDone from './nodone-icon.svg';
 
 // export { Logo, ListIcon, DoneIcon, CreateIcon, CleanIcon, DoneAllIcon, EditIcon, RemoveIcon, ClearIcon, UndoIcon };
 
@@ -33,5 +34,6 @@ export const Assets = {
     ResetIcon,
     Add,
     Update,
-    NoTask
+    NoTask,
+    NoDone
 }

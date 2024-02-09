@@ -21,7 +21,7 @@ const EditTodo:React.FC<EditTodoProps> = ({title, setTitle, desc, setDesc, handl
               btnName="Save"
               btnColor="orange"
               closeId="closeEditForm"
-              modalTitle="Create Task"
+              modalTitle="Edit Task"
               onClick={handleEditTask}
           >
               <div className="form">

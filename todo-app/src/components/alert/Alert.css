@@ -1,0 +1,41 @@
+.alert-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1060;
+    padding: 15px 25px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.alert-toast.visible {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Define color classes as needed */
+.alert-toast.success {
+    color: #1E4620;
+    background-color: #EDF7ED;
+}
+
+.alert-toast.danger {
+    color: #5F2120;
+    background-color: #FDEDED;
+}
+
+.alert-toast.primary {
+    color: #014361;
+    background-color: #E5F6FD;
+}
+
+.alert-toast.warning {
+    color: #663C00;
+    background-color: #FFF4E5;
+}
+
+.alert-toast.secondary {
+    color: #646464;
+    background-color: #ebebeb;
+}

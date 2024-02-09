@@ -7,6 +7,19 @@ const useCreateTodo = () => {
     const [desc, setDesc] = useState('');
     const [tasks, setTasks] = useState<Task[]>([]);
 
+    // State to manage selected task
+    const [selectTaskId, setSelectTaskId] = useState<number>(0);
+    
+    // State to manage task status and styles
+    const [isDone, setIsDone] = useState<string>('');
+    const [lineThrough, setLineThrough] = useState<string>('');
+    const [disabled, setDisabled] = useState<boolean>(false);
+
+    // State to manage alert visibility
+    const [alertVisible, setAlertVisible] = useState<boolean>(false);
+    const [alertMessage, setAlertMessage] = useState<string>('');
+    const [alertColor, setAlertColor] = useState<string>('');
+
     // Function to fetch tasks from local storage
     const fetchTasksFromLocalStorage = () => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
@@ -16,45 +29,59 @@ const useCreateTodo = () => {
     // Fetch tasks from local storage when component mounts
     useEffect(() => {
         fetchTasksFromLocalStorage();
+        console.log('Rendered');
     }, []);
 
     // Function to create a task
     const handleCreateTask = () => {
         // Validate input fields
         if (!title.trim() || !desc.trim()) {
-            alert("Title and description cannot be empty");
-            return;
+            // Set alert message and color for empty fields
+            setAlertMessage('All fields are required!');
+            setAlertColor('primary');
+            setAlertVisible(true);
+
+            // Hide alert after 1800 milliseconds
+            setTimeout(() => {
+                setAlertVisible(false);
+            }, 1800);
+        } else {
+            // Create new task
+            const newTask: Task = {
+                task_id: Math.floor(1000 + Math.random() * 9000),
+                task_title: title,
+                task_desc: desc,
+                task_status: false
+            };
+
+            // Add new task to tasks array
+            setTasks(prevTasks => [...prevTasks, newTask]);
+            localStorage.setItem('tasks', JSON.stringify([...tasks, newTask]));
+
+            // Set success alert message and color
+            setAlertMessage('Task created successfully!');
+            setAlertColor('success');
+            setAlertVisible(true);
+
+            // Hide success alert after 1800 milliseconds
+            setTimeout(() => {
+                setAlertVisible(false);
+            }, 1800);
+
+            // Clear input fields
+            setTitle('');
+            setDesc('');
+
+            // Close modal
+            document.getElementById('closeCreateForm')?.click();
         }
-
-        // Create new task
-        const newTask: Task = {
-            task_id: Math.floor(1000 + Math.random() * 9000),
-            task_title: title,
-            task_desc: desc,
-            task_status: false
-        };
-        // Add new task to tasks array
-        setTasks(prevTasks => [...prevTasks, newTask]);
-        localStorage.setItem('tasks', JSON.stringify([...tasks, newTask]));
-
-        // Clear input fields after adding task
-        setTitle('');
-        setDesc('');
-
-        // Close modal
-        document.getElementById('closeCreateForm')?.click();
     };
-
-    // State to manage selected task for editing/deleting
-    const [selectTaskId, setSelectTaskId] = useState<number>(0);
-    const [selectTaskTitle, setSelectTaskTitle] = useState<string>('');
-    const [selectTaskDesc, setSelectTaskDesc] = useState<string>('');
 
     // Function to set selected task for editing/deleting
     const handleSelectedId = (id: number, title: string, desc: string) => {
         setSelectTaskId(id);
-        setSelectTaskTitle(title);
-        setSelectTaskDesc(desc);
+        setTitle(title);
+        setDesc(desc);
     }
 
     // Function to edit a task
@@ -62,28 +89,49 @@ const useCreateTodo = () => {
         // Create edited task object
         const editedTask: Task = {
             task_id: selectTaskId,
-            task_title: selectTaskTitle,
-            task_desc: selectTaskDesc,
+            task_title: title,
+            task_desc: desc,
             task_status: false
         }
 
         // Validate input fields
         if (!editedTask.task_title.trim() || !editedTask.task_desc.trim()) {
-            alert("Title and description cannot be empty");
-            return;
+            // Set alert message and color for empty fields
+            setAlertMessage('All fields are required!');
+            setAlertColor('primary');
+            setAlertVisible(true);
+
+            // Hide alert after 1800 milliseconds
+            setTimeout(() => {
+                setAlertVisible(false);
+            }, 1800);
+        } else {
+            // Update tasks array with edited task
+            const updatedTasks = tasks.map(task =>
+                task.task_id === selectTaskId ? { ...task, ...editedTask } : task
+            );
+
+            // Update local storage with edited tasks
+            setTasks(updatedTasks);
+            localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+            // Set success alert message and color
+            setAlertMessage('Task updated successfully!');
+            setAlertColor('success');
+            setAlertVisible(true);
+
+            // Hide success alert after 1800 milliseconds
+            setTimeout(() => {
+                setAlertVisible(false);
+            }, 1800);
+
+            // Clear input fields after editing task
+            setTitle('');
+            setDesc('');
+
+            // Close modal
+            document.getElementById('closeEditForm')?.click();
         }
-
-        // Update tasks array with edited task
-        const updatedTasks = tasks.map(task =>
-            task.task_id === selectTaskId ? { ...task, ...editedTask } : task
-        );
-        
-        // Update local storage with edited tasks
-        setTasks(updatedTasks);
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-        // Close modal
-        document.getElementById('closeEditForm')?.click();
     };
 
     // Function to delete a task
@@ -91,14 +139,37 @@ const useCreateTodo = () => {
         const updatedTasks = tasks.filter(task => task.task_id !== selectTaskId);
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        // Set delete alert message and color
+        setAlertMessage('Task deleted successfully!');
+        setAlertColor('danger');
+        setAlertVisible(true);
+
+        // Hide success alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
     };
 
-    const [isDone, setIsDone] = useState<string>('');
-    const [lineThrough, setLineThrough] = useState<string>('');
-    const [disabled, setDisabled] = useState<boolean>(false);
+    // Function to delete all todos tasks
+    const handleDeleteAllTasks = () => {
+        const updatedTasks = tasks.filter(task => task.task_status);
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        // Set delete all alert message and color
+        setAlertMessage('All tasks deleted successfully!');
+        setAlertColor('danger');
+        setAlertVisible(true);
+
+        // Hide success alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
+    };
 
     // Function to mark a task as done
-    const handleUpdateStatus = (id: number) => {
+    const handleUpdateStatus = (id: number, title: string) => {
         setSelectTaskId(id);
         setIsDone('checked');
         setLineThrough('strikethrough');
@@ -116,6 +187,50 @@ const useCreateTodo = () => {
             setLineThrough('');
             setDisabled(false);
         }, 1000);
+
+        // Set success alert message and color for task completion
+        setAlertMessage(`"${title}" marked as completed.`);
+        setAlertColor('success');
+        setAlertVisible(true);
+        
+        // Hide success alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
+    };
+
+    // Function to mark all tasks as done
+    const handleDoneAll = () => {
+        const updatedTasks = tasks.map(task => ({ ...task, task_status: true }));
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        // Set success alert message and color
+        setAlertMessage('All tasks marked as completed.');
+        setAlertColor('primary');
+        setAlertVisible(true);
+
+        // Hide success alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
+    }
+
+    // Function to delete all done tasks
+    const handleDoneDelete = () => {
+        const updatedTasks = tasks.filter(task => !task.task_status);
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        // Set delete alert message and color
+        setAlertMessage('All completed tasks deleted successfully!');
+        setAlertColor('warning');
+        setAlertVisible(true);
+
+        // Hide success alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
     }
 
     // Function to undo a task
@@ -126,29 +241,41 @@ const useCreateTodo = () => {
 
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        // Set undo alert message and color
+        setAlertMessage('Task undone successfully!');
+        setAlertColor('secondary');
+        setAlertVisible(true);
+
+        // Hide success alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
     }
 
     return {
-        title,
-        setTitle,
         desc,
-        setDesc,
+        title,
         tasks,
         isDone,
         disabled,
+        alertColor,
         lineThrough,
+        alertVisible,
+        alertMessage,
         selectTaskId,
-        selectTaskTitle,
-        selectTaskDesc,
+        setDesc,
+        setTitle,
+        handleDoneAll,
+        handleEditTask,
+        handleUndoTask,
         setSelectTaskId,
-        setSelectTaskTitle,
-        setSelectTaskDesc,
         handleSelectedId,
         handleCreateTask,
-        handleEditTask,
         handleDeleteTask,
+        handleDoneDelete,
         handleUpdateStatus,
-        handleUndoTask
+        handleDeleteAllTasks
     };
 }
 
