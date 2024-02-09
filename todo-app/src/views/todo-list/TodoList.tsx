@@ -32,25 +32,31 @@ const TodoList: React.FC = () => {
       
     return (
         <>  
+            {/* Todo Modals */}
             <Components.Modal 
                 onSingleDelete={handleDeleteTask} 
                 onMultipleDelete={handleDeleteAllTasks}
                 onDoneAll={handleDoneAll}
                 onDoneDelete={handleDoneDelete}
             />
+
+            {/* Create task Modal */}
             <CreateTodo title={title} setTitle={setTitle} 
                 desc={desc} setDesc={setDesc} 
                 handleCreateTask={handleCreateTask} 
                 Component={Components.FormModal} 
                 icon={Assets.Add}
             />
+
+            {/*  Edit Task Modal */}
             <EditTodo title={title} setTitle={setTitle} 
                 desc={desc} setDesc={setDesc} 
                 handleEditTask={handleEditTask} 
                 Component={Components.FormModal} 
                 icon={Assets.Update}
             />
-
+            
+            {/* Alert component */}
             <Components.Alert visible={alertVisible} text={alertMessage}color={alertColor}/>
 
             <div className='header d-md-flex justify-content-between align-items-center m-md-4 p-3 pt-0 pb-2'>
@@ -97,7 +103,7 @@ const TodoList: React.FC = () => {
                     </div>
 
                     {/* Task list part */}
-                    <div className="task-list-content scrollbar row mt-5 overflow-auto">
+                    <div className="task-list-content scrollbar row mt-md-5 overflow-auto">
                         {tasks.filter(task => !task.task_status).length === 0 ? (
                             <div className="notask p-3 mt-4 text-center">
                                 <div><img src={Assets.NoTask} alt="Loading..." /></div>
@@ -160,7 +166,7 @@ const TodoList: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="task-list-content scrollbar row mt-5 overflow-auto">
+                    <div className="task-list-content scrollbar row mt-md-5 overflow-auto">
                         {tasks.filter(task => task.task_status).length === 0 ? (
                             <div className="notask p-3 mt-4  text-center">
                                 <div><img src={Assets.NoDone} alt="Loading..." /></div>

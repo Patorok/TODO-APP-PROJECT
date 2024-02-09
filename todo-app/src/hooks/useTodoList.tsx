@@ -32,19 +32,24 @@ const useCreateTodo = () => {
         console.log('Rendered');
     }, []);
 
+    const alert = (message: string, color: string) => {
+        // Set alert message and color
+        setAlertMessage(message);
+        setAlertColor(color);
+        setAlertVisible(true);
+
+        // Hide alert after 1800 milliseconds
+        setTimeout(() => {
+            setAlertVisible(false);
+        }, 1800);
+    }
+
     // Function to create a task
     const handleCreateTask = () => {
         // Validate input fields
         if (!title.trim() || !desc.trim()) {
-            // Set alert message and color for empty fields
-            setAlertMessage('All fields are required!');
-            setAlertColor('primary');
-            setAlertVisible(true);
-
-            // Hide alert after 1800 milliseconds
-            setTimeout(() => {
-                setAlertVisible(false);
-            }, 1800);
+            // Set alert message and color
+            alert('All fields are required!', 'primary');
         } else {
             // Create new task
             const newTask: Task = {
@@ -59,14 +64,7 @@ const useCreateTodo = () => {
             localStorage.setItem('tasks', JSON.stringify([...tasks, newTask]));
 
             // Set success alert message and color
-            setAlertMessage('Task created successfully!');
-            setAlertColor('success');
-            setAlertVisible(true);
-
-            // Hide success alert after 1800 milliseconds
-            setTimeout(() => {
-                setAlertVisible(false);
-            }, 1800);
+            alert('Task created successfully!', 'success');
 
             // Clear input fields
             setTitle('');
@@ -96,15 +94,8 @@ const useCreateTodo = () => {
 
         // Validate input fields
         if (!editedTask.task_title.trim() || !editedTask.task_desc.trim()) {
-            // Set alert message and color for empty fields
-            setAlertMessage('All fields are required!');
-            setAlertColor('primary');
-            setAlertVisible(true);
-
-            // Hide alert after 1800 milliseconds
-            setTimeout(() => {
-                setAlertVisible(false);
-            }, 1800);
+            // Set alert message and color
+            alert('All fields are required!', 'primary');
         } else {
             // Update tasks array with edited task
             const updatedTasks = tasks.map(task =>
@@ -115,15 +106,8 @@ const useCreateTodo = () => {
             setTasks(updatedTasks);
             localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-            // Set success alert message and color
-            setAlertMessage('Task updated successfully!');
-            setAlertColor('success');
-            setAlertVisible(true);
-
-            // Hide success alert after 1800 milliseconds
-            setTimeout(() => {
-                setAlertVisible(false);
-            }, 1800);
+            // Set alert message and color
+            alert('Task updated successfully!', 'success');
 
             // Clear input fields after editing task
             setTitle('');
@@ -140,15 +124,8 @@ const useCreateTodo = () => {
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-        // Set delete alert message and color
-        setAlertMessage('Task deleted successfully!');
-        setAlertColor('danger');
-        setAlertVisible(true);
-
-        // Hide success alert after 1800 milliseconds
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 1800);
+        // Set alert message and color
+        alert('Task deleted successfully!', 'danger');
     };
 
     // Function to delete all todos tasks
@@ -157,15 +134,8 @@ const useCreateTodo = () => {
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-        // Set delete all alert message and color
-        setAlertMessage('All tasks deleted successfully!');
-        setAlertColor('danger');
-        setAlertVisible(true);
-
-        // Hide success alert after 1800 milliseconds
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 1800);
+        // Set alert message and color
+        alert('All tasks deleted successfully!', 'danger');
     };
 
     // Function to mark a task as done
@@ -183,20 +153,13 @@ const useCreateTodo = () => {
             setTasks(updatedTasks);
             localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
+            // Set alert message and color for task completion
+            alert(`"${title}" marked as done.`, 'success');
+
             setIsDone('');
             setLineThrough('');
             setDisabled(false);
         }, 1000);
-
-        // Set success alert message and color for task completion
-        setAlertMessage(`"${title}" marked as completed.`);
-        setAlertColor('success');
-        setAlertVisible(true);
-        
-        // Hide success alert after 1800 milliseconds
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 1800);
     };
 
     // Function to mark all tasks as done
@@ -205,15 +168,8 @@ const useCreateTodo = () => {
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-        // Set success alert message and color
-        setAlertMessage('All tasks marked as completed.');
-        setAlertColor('primary');
-        setAlertVisible(true);
-
-        // Hide success alert after 1800 milliseconds
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 1800);
+        // Set alert message and color for emptying done list
+        alert('All tasks marked as completed.', 'primary');
     }
 
     // Function to delete all done tasks
@@ -222,15 +178,8 @@ const useCreateTodo = () => {
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-        // Set delete alert message and color
-        setAlertMessage('All completed tasks deleted successfully!');
-        setAlertColor('warning');
-        setAlertVisible(true);
-
-        // Hide success alert after 1800 milliseconds
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 1800);
+        // Set alert message and color for emptying done list
+        alert('All completed tasks deleted successfully!', 'warning');
     }
 
     // Function to undo a task
@@ -242,15 +191,8 @@ const useCreateTodo = () => {
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-        // Set undo alert message and color
-        setAlertMessage('Task undone successfully!');
-        setAlertColor('secondary');
-        setAlertVisible(true);
-
-        // Hide success alert after 1800 milliseconds
-        setTimeout(() => {
-            setAlertVisible(false);
-        }, 1800);
+        // Set alert message and color for task completion
+        alert('Task undone successfully!', 'secondary');
     }
 
     return {

@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({ taskTitle, taskDesc, checkbox, children, is
     return (
         <>
             <div className="col-12 p-4 pt-0">
-            <div className={"card shadow rounded-2 " + isDone}>
+            <div className={`card shadow rounded-2 ${isDone}`}>
                     <div className="card-body rounded-2 d-flex align-items-center justify-content-between">
                         <div className="d-flex align-items-center">
                             {checkbox && (
